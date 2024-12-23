@@ -1,2 +1,3 @@
 # Prospyr
-Your go to place to find work and prosper
+
+Your go to place to find work and prosper.
