@@ -1,3 +1,23 @@
 spring:
     application:
         name: Profile Service
+
+    datasource:
+        url: jdbc:postgresql://localhost:5433/prospyr_db
+        username: prospyr_user
+        password: prospyr_user
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+
+    security:
+        user:
+            name: prospyr_profile
+            password: prospyr_profile
+
+jwt:
+    private-key: classpath:jwt/app.key
+    public-key: classpath:jwt/app.pub
+    ttl: 15m
