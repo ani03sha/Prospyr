@@ -25,25 +25,24 @@ import java.time.Duration;
 @Setter
 public class JwtConfiguration {
 
-    private RSAPrivateKey rsaPrivateKey;
-    private RSAPublicKey rsaPublicKey;
+    private RSAPrivateKey privateKey;
+    private RSAPublicKey publicKey;
     private Duration ttl;
 
     @Bean
     public JwtEncoder jwtEncoder() {
-        final var jwk = new RSAKey.Builder(rsaPublicKey)
-                .privateKey(rsaPrivateKey).build();
+        final var jwk = new RSAKey.Builder(publicKey)
+                .privateKey(privateKey).build();
         return new NimbusJwtEncoder(new ImmutableJWKSet<>(new JWKSet(jwk)));
     }
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(rsaPublicKey).build();
+        return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
 
     @Bean
-    public JwtService jwtService(@Value("${spring.application.name}") final String appName,
-                                 final JwtEncoder jwtEncoder) {
+    public JwtService jwtService(@Value("${spring.application.name}") final String appName, final JwtEncoder jwtEncoder) {
         return new JwtService(appName, ttl, jwtEncoder);
     }
 }

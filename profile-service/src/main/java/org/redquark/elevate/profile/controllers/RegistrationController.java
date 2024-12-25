@@ -2,7 +2,6 @@ package org.redquark.elevate.profile.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.redquark.elevate.profile.domains.dtos.RegistrationRequestDto;
 import org.redquark.elevate.profile.domains.dtos.RegistrationResponseDto;
