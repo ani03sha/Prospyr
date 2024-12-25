@@ -19,17 +19,14 @@ public class ProfileRegistrationService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Profile registerProfile(RegistrationRequest request) {
+    public Profile registerProfile(Profile profile) {
         log.info("Checking if the username and password are already in use...");
-        if (profileRepository.existsByUsername(request.username()) || profileRepository.existsByEmail(request.email())) {
+        if (profileRepository.existsByUsername(profile.getUsername()) || profileRepository.existsByEmail(profile.getEmail())) {
             log.error("Username or email already in use. Returning...");
             throw new ValidationException("Username or email already exists");
         }
         log.info("Creating a new profile...");
-        Profile profile = new Profile();
-        profile.setUsername(request.username());
-        profile.setEmail(request.email());
-        profile.setPassword(passwordEncoder.encode(request.password()));
+        profile.setPassword(passwordEncoder.encode(profile.getPassword()));
         log.info("Saving the profile in the database...");
         return profileRepository.save(profile);
     }
