@@ -1,0 +1,9 @@
+services:
+    postgres:
+        image: 'postgres:latest'
+        environment:
+            - 'POSTGRES_DB=prospyr_profiles'
+            - 'POSTGRES_PASSWORD=root'
+            - 'POSTGRES_USER=prospyr_user'
+        ports:
+            - '5432'

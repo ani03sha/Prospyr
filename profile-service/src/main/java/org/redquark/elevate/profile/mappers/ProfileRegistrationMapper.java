@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class ProfileRegistrationMapper {
 
     public Profile toEntity(RegistrationRequestDto registrationRequestDto) {
-        final  Profile profile = new Profile();
+        final Profile profile = new Profile();
         profile.setUsername(registrationRequestDto.username());
         profile.setEmail(registrationRequestDto.email());
         profile.setPassword(registrationRequestDto.password());
