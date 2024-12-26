@@ -19,6 +19,6 @@ public class ProfileRegistrationMapper {
     }
 
     public RegistrationResponseDto toRegistrationResponseDto(final Profile profile) {
-        return new RegistrationResponseDto(profile.getUsername(), profile.getEmail());
+        return new RegistrationResponseDto(profile.getUsername(), profile.getEmail(), profile.isEmailVerified());
     }
 }

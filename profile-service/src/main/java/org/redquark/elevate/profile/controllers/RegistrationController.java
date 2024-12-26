@@ -7,7 +7,9 @@ import org.redquark.elevate.profile.domains.dtos.RegistrationRequestDto;
 import org.redquark.elevate.profile.domains.dtos.RegistrationResponseDto;
 import org.redquark.elevate.profile.domains.entities.Profile;
 import org.redquark.elevate.profile.mappers.ProfileRegistrationMapper;
+import org.redquark.elevate.profile.services.EmailVerificationService;
 import org.redquark.elevate.profile.services.ProfileRegistrationService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +24,19 @@ public class RegistrationController {
 
     private final ProfileRegistrationService profileRegistrationService;
     private final ProfileRegistrationMapper profileRegistrationMapper;
+    private final EmailVerificationService emailVerificationService;
+
+    @Value("${email-verification.required}")
+    private boolean emailVerificationRequired;
 
     @PostMapping(value = "/register")
     public ResponseEntity<RegistrationResponseDto> registerProfile(@Valid @RequestBody final RegistrationRequestDto registrationRequestDto) {
         log.info("Received request to create a new profile with username: {} and email: {}", registrationRequestDto.username(), registrationRequestDto.email());
         final Profile registeredProfile = profileRegistrationService.registerProfile(profileRegistrationMapper.toEntity(registrationRequestDto));
+        if (emailVerificationRequired) {
+            emailVerificationService.sendVerificationToken(registeredProfile.getId(), registeredProfile.getEmail());
+        }
+
         return ResponseEntity.ok(profileRegistrationMapper.toRegistrationResponseDto(registeredProfile));
     }
 }

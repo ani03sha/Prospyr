@@ -1,4 +1,4 @@
 package org.redquark.elevate.profile.domains.dtos;
 
-public record RegistrationResponseDto(String username, String email) {
+public record RegistrationResponseDto(String username, String email, boolean emailVerificationRequired) {
 }
