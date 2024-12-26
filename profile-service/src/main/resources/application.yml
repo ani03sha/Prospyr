@@ -7,6 +7,13 @@ spring:
             name: prospyr_profile
             password: prospyr_profile
 
+    mail:
+        host: localhost
+        port: 1025
+        properties:
+            mail.smtp.auth: false
+            mail.smtp.starttls.enable: false
+
 jwt:
     private-key: classpath:jwt/app.key
     public-key: classpath:jwt/app.pub

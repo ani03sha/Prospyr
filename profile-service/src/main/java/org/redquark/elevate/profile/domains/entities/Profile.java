@@ -45,4 +45,7 @@ public class Profile {
     @Column(name = "updated_at")
     @LastModifiedDate
     private Instant updatedAt;
+
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified;
 }
