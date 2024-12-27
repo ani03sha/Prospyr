@@ -9,7 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/v1/profiles/auth")
@@ -23,5 +26,17 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponseDto> authenticate(@RequestBody final AuthenticationRequestDto request) {
         log.info("Received request to authenticate");
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    @PostMapping(value = "/refresh-token")
+    public ResponseEntity<AuthenticationResponseDto> refreshToken(@RequestParam UUID refreshToken) {
+        final AuthenticationResponseDto authenticationResponseDto = authenticationService.refreshToken(refreshToken);
+        return ResponseEntity.ok(authenticationResponseDto);
+    }
+
+    @PostMapping(value = "/logout")
+    public ResponseEntity<Void> logout(@RequestParam UUID refreshToken) {
+        authenticationService.revokeRefreshToken(refreshToken);
+        return ResponseEntity.noContent().build();
     }
 }

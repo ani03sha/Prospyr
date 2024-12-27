@@ -1,4 +1,6 @@
 package org.redquark.elevate.profile.domains.dtos;
 
-public record AuthenticationResponseDto(String token) {
+import java.util.UUID;
+
+public record AuthenticationResponseDto(String token, UUID refreshToken) {
 }
